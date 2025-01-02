@@ -24,6 +24,7 @@ import com.weather.app.data.WeatherResponse
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private var timeUpdateHandler: Handler? = null
     private val weatherApi: WeatherApi by lazy {
         Retrofit.Builder()
             .baseUrl("https://api.openweathermap.org/data/2.5/")
@@ -39,6 +40,9 @@ class MainActivity : AppCompatActivity() {
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         
+        // 初始化Handler
+        timeUpdateHandler = Handler(Looper.getMainLooper())
+        
         // 更新当前时间
         updateCurrentTime()
         
@@ -51,14 +55,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateCurrentTime() {
-        val handler = Handler(Looper.getMainLooper())
-        handler.post(object : Runnable {
+        // 创建时间更新的Runnable
+        val timeUpdateRunnable = object : Runnable {
             override fun run() {
-                val currentTime = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
+                val currentTime = SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(Date())
                 binding.tvCurrentTime.text = currentTime
-                handler.postDelayed(this, 60000) // 每分钟更新一次
+                // 每秒更新一次
+                timeUpdateHandler?.postDelayed(this, 1000)
             }
-        })
+        }
+
+        // 立即开始更新时间
+        timeUpdateHandler?.post(timeUpdateRunnable)
     }
 
     private fun getCurrentLocation() {
@@ -105,6 +113,13 @@ class MainActivity : AppCompatActivity() {
             arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
             LOCATION_PERMISSION_REQUEST_CODE
         )
+    }
+
+    override fun onDestroy() {
+        // 清理Handler，避免内存泄漏
+        timeUpdateHandler?.removeCallbacksAndMessages(null)
+        timeUpdateHandler = null
+        super.onDestroy()
     }
 
     companion object {
