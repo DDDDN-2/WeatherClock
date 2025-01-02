@@ -12,13 +12,17 @@ import com.weather.app.databinding.FragmentAlarmSettingBinding
 import com.weather.app.db.AlarmEntity
 import com.weather.app.ui.viewmodel.AlarmViewModel
 import com.weather.app.ui.viewmodel.AlarmViewModelFactory
+import com.weather.app.utils.AlarmManagerHelper
 import java.util.*
 
 class AlarmSettingFragment : DialogFragment() {
     private var _binding: FragmentAlarmSettingBinding? = null
     private val binding get() = _binding!!
     private val viewModel: AlarmViewModel by viewModels {
-        AlarmViewModelFactory((requireActivity().application as WeatherApp).repository)
+        AlarmViewModelFactory(
+            repository = (requireActivity().application as WeatherApp).repository,
+            alarmManagerHelper = AlarmManagerHelper(requireContext())
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

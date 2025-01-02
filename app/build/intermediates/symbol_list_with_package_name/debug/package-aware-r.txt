@@ -3014,6 +3014,7 @@ drawable dialog_background
 drawable googleg_disabled_color_18
 drawable googleg_standard_color_18
 drawable ic_add
+drawable ic_alarm
 drawable ic_arrow_back_black_24
 drawable ic_clear_black_24
 drawable ic_clear_day
@@ -3215,7 +3216,9 @@ id bounceBoth
 id bounceEnd
 id bounceStart
 id btnAddAlarm
+id btnDismiss
 id btnSave
+id btnSnooze
 id buttonPanel
 id cache_measures
 id callMeasure
@@ -3783,6 +3786,7 @@ layout design_navigation_menu
 layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
+layout dialog_alarm_ringing
 layout fragment_alarm
 layout fragment_alarm_setting
 layout item_alarm

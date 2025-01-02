@@ -30,6 +30,8 @@ import com.weather.app.utils.WeatherIconMapper
 import android.view.View
 import android.view.WindowManager
 import android.graphics.Color
+import com.weather.app.utils.AlarmManagerHelper
+import com.weather.app.ui.dialog.AlarmRingingDialog
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -43,7 +45,10 @@ class MainActivity : AppCompatActivity() {
             .create(WeatherApi::class.java)
     }
     private val viewModel: AlarmViewModel by viewModels {
-        AlarmViewModelFactory((application as WeatherApp).repository)
+        AlarmViewModelFactory(
+            repository = (application as WeatherApp).repository,
+            alarmManagerHelper = AlarmManagerHelper(this)
+        )
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,6 +77,14 @@ class MainActivity : AppCompatActivity() {
 
         setupAlarmList()
         setupAddAlarmButton()
+
+        // 检查是否需要显示闹钟对话框
+        if (intent?.getBooleanExtra("SHOW_ALARM_DIALOG", false) == true) {
+            showAlarmRingingDialog(
+                intent.getIntExtra("ALARM_ID", 0),
+                intent.getStringExtra("ALARM_LABEL") ?: "闹钟"
+            )
+        }
     }
 
     private fun updateCurrentTime() {
@@ -215,6 +228,11 @@ class MainActivity : AppCompatActivity() {
         binding.btnAddAlarm.setOnClickListener {
             AlarmSettingFragment().show(supportFragmentManager, "alarm_setting")
         }
+    }
+
+    private fun showAlarmRingingDialog(alarmId: Int, label: String) {
+        AlarmRingingDialog.newInstance(alarmId, label)
+            .show(supportFragmentManager, "alarm_ringing")
     }
 
     companion object {
