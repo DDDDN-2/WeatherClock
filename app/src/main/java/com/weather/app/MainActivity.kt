@@ -20,6 +20,7 @@ import java.util.*
 import kotlin.math.roundToInt
 import com.weather.app.api.WeatherApi
 import com.weather.app.data.WeatherResponse
+import android.util.Log
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -70,31 +71,61 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getCurrentLocation() {
+        Log.d("WeatherApp", "开始获取位置信息")
+        
         if (ActivityCompat.checkSelfPermission(this, 
             Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             
+            Log.d("WeatherApp", "已获得位置权限，正在请求位置...")
+            
             fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-                location?.let {
-                    fetchWeatherData(it.latitude, it.longitude)
+                if (location != null) {
+                    Log.d("WeatherApp", "成功获取位置: lat=${location.latitude}, lon=${location.longitude}")
+                    fetchWeatherData(location.latitude, location.longitude)
+                } else {
+                    Log.d("WeatherApp", "位置为空，使用默认位置（北京）")
+                    // 使用北京的经纬度作为默认值
+                    fetchWeatherData(39.9042, 116.4074)
                 }
+            }.addOnFailureListener { e ->
+                Log.e("WeatherApp", "获取位置失败，使用默认位置", e)
+                // 使用北京的经纬度作为默认值
+                fetchWeatherData(39.9042, 116.4074)
             }
+        } else {
+            Log.w("WeatherApp", "没有位置权限，使用默认位置")
+            // 使用北京的经纬度作为默认值
+            fetchWeatherData(39.9042, 116.4074)
         }
     }
 
     private fun fetchWeatherData(lat: Double, lon: Double) {
+        Log.d("WeatherApp", "开始获取天气数据: lat=$lat, lon=$lon")
+        
         lifecycleScope.launch {
             try {
+                Log.d("WeatherApp", "正在调用天气API...")
                 val response = weatherApi.getCurrentWeather(
                     lat = lat,
                     lon = lon,
                     apiKey = "7b2397a91df632710a076feb9283d4fc"
                 )
                 
+                Log.d("WeatherApp", "API响应成功: $response")
+                Log.d("WeatherApp", "城市: ${response.name}")
+                Log.d("WeatherApp", "温度: ${response.main.temp}°C")
+                Log.d("WeatherApp", "天气描述: ${response.weather.firstOrNull()?.description}")
+                
                 binding.tvLocation.text = response.name
                 binding.tvTemperature.text = "${response.main.temp.roundToInt()}°C"
                 binding.tvWeatherDescription.text = response.weather.firstOrNull()?.description
                     ?.capitalize(Locale.getDefault())
+                
+                Log.d("WeatherApp", "UI更新完成")
             } catch (e: Exception) {
+                Log.e("WeatherApp", "获取天气数据失败", e)
+                Log.e("WeatherApp", "错误详情: ${e.message}")
+                e.printStackTrace()
                 Toast.makeText(this@MainActivity, "Error: ${e.message}", Toast.LENGTH_LONG).show()
             }
         }
