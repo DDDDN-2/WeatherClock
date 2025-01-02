@@ -1,22 +1,78 @@
 [
     {
-        "merged": "com.weather.app-merged_res-35:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
-        "source": "com.weather.app-main-37:/mipmap-anydpi-v26/ic_launcher_round.xml"
+        "merged": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-merged_res-35:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-main-37:\\mipmap-anydpi-v26\\ic_launcher.xml"
     },
     {
-        "merged": "com.weather.app-merged_res-35:/drawable_ic_launcher_foreground.xml.flat",
-        "source": "com.weather.app-main-37:/drawable/ic_launcher_foreground.xml"
+        "merged": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-merged_res-35:\\drawable_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-main-37:\\drawable\\ic_launcher_background.xml"
     },
     {
-        "merged": "com.weather.app-merged_res-35:/drawable_ic_launcher_background.xml.flat",
-        "source": "com.weather.app-main-37:/drawable/ic_launcher_background.xml"
+        "merged": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-merged_res-35:\\drawable_ic_thunderstorm.xml.flat",
+        "source": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-main-37:\\drawable\\ic_thunderstorm.xml"
     },
     {
-        "merged": "com.weather.app-merged_res-35:/layout_activity_main.xml.flat",
-        "source": "com.weather.app-main-37:/layout/activity_main.xml"
+        "merged": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-merged_res-35:\\drawable_ic_partly_cloudy_day.xml.flat",
+        "source": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-main-37:\\drawable\\ic_partly_cloudy_day.xml"
     },
     {
-        "merged": "com.weather.app-merged_res-35:/mipmap-anydpi-v26_ic_launcher.xml.flat",
-        "source": "com.weather.app-main-37:/mipmap-anydpi-v26/ic_launcher.xml"
+        "merged": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-merged_res-35:\\drawable_ic_partly_cloudy_night.xml.flat",
+        "source": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-main-37:\\drawable\\ic_partly_cloudy_night.xml"
+    },
+    {
+        "merged": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-merged_res-35:\\drawable_ic_snow.xml.flat",
+        "source": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-main-37:\\drawable\\ic_snow.xml"
+    },
+    {
+        "merged": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-merged_res-35:\\drawable_ic_clear_day.xml.flat",
+        "source": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-main-37:\\drawable\\ic_clear_day.xml"
+    },
+    {
+        "merged": "com.weather.app-merged_res-35:/drawable_ic_clear_night.xml.flat",
+        "source": "com.weather.app-main-37:/drawable/ic_clear_night.xml"
+    },
+    {
+        "merged": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-merged_res-35:\\drawable_ic_clear_night.xml.flat",
+        "source": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-main-37:\\drawable\\ic_clear_night.xml"
+    },
+    {
+        "merged": "com.weather.app-merged_res-35:/drawable_ic_cloudy.xml.flat",
+        "source": "com.weather.app-main-37:/drawable/ic_cloudy.xml"
+    },
+    {
+        "merged": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-merged_res-35:\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-main-37:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-merged_res-35:\\drawable_ic_rain.xml.flat",
+        "source": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-main-37:\\drawable\\ic_rain.xml"
+    },
+    {
+        "merged": "com.weather.app-merged_res-35:/drawable_ic_rain.xml.flat",
+        "source": "com.weather.app-main-37:/drawable/ic_rain.xml"
+    },
+    {
+        "merged": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-merged_res-35:\\drawable_ic_cloudy.xml.flat",
+        "source": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-main-37:\\drawable\\ic_cloudy.xml"
+    },
+    {
+        "merged": "com.weather.app-merged_res-35:/drawable_ic_thunderstorm.xml.flat",
+        "source": "com.weather.app-main-37:/drawable/ic_thunderstorm.xml"
+    },
+    {
+        "merged": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-merged_res-35:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-main-37:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.weather.app-merged_res-35:/drawable_ic_clear_day.xml.flat",
+        "source": "com.weather.app-main-37:/drawable/ic_clear_day.xml"
+    },
+    {
+        "merged": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-merged_res-35:\\drawable_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-main-37:\\drawable\\ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-merged_res-35:\\drawable_ic_fog.xml.flat",
+        "source": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-main-37:\\drawable\\ic_fog.xml"
     }
 ]

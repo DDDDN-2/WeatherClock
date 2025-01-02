@@ -21,6 +21,7 @@ import kotlin.math.roundToInt
 import com.weather.app.api.WeatherApi
 import com.weather.app.data.WeatherResponse
 import android.util.Log
+import com.weather.app.utils.WeatherIconMapper
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -116,10 +117,17 @@ class MainActivity : AppCompatActivity() {
                 Log.d("WeatherApp", "温度: ${response.main.temp}°C")
                 Log.d("WeatherApp", "天气描述: ${response.weather.firstOrNull()?.description}")
                 
-                binding.tvLocation.text = response.name
-                binding.tvTemperature.text = "${response.main.temp.roundToInt()}°C"
-                binding.tvWeatherDescription.text = response.weather.firstOrNull()?.description
-                    ?.capitalize(Locale.getDefault())
+                binding.apply {
+                    tvLocation.text = response.name
+                    tvTemperature.text = "${response.main.temp.roundToInt()}°C"
+                    tvWeatherDescription.text = response.weather.firstOrNull()?.description
+                        ?.capitalize(Locale.getDefault())
+                    
+                    // 设置天气图标
+                    response.weather.firstOrNull()?.icon?.let { iconCode ->
+                        ivWeatherIcon.setImageResource(WeatherIconMapper.getWeatherIconResource(iconCode))
+                    }
+                }
                 
                 Log.d("WeatherApp", "UI更新完成")
             } catch (e: Exception) {
