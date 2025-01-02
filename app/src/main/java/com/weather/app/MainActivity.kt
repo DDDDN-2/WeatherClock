@@ -9,9 +9,15 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.activity.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.weather.app.databinding.ActivityMainBinding
+import com.weather.app.ui.adapter.AlarmAdapter
+import com.weather.app.ui.AlarmSettingFragment
+import com.weather.app.ui.viewmodel.AlarmViewModel
+import com.weather.app.ui.viewmodel.AlarmViewModelFactory
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -19,7 +25,6 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
 import com.weather.app.api.WeatherApi
-import com.weather.app.data.WeatherResponse
 import android.util.Log
 import com.weather.app.utils.WeatherIconMapper
 import android.view.View
@@ -36,6 +41,9 @@ class MainActivity : AppCompatActivity() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(WeatherApi::class.java)
+    }
+    private val viewModel: AlarmViewModel by viewModels {
+        AlarmViewModelFactory((application as WeatherApp).repository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,6 +69,9 @@ class MainActivity : AppCompatActivity() {
         } else {
             requestLocationPermission()
         }
+
+        setupAlarmList()
+        setupAddAlarmButton()
     }
 
     private fun updateCurrentTime() {
@@ -177,6 +188,32 @@ class MainActivity : AppCompatActivity() {
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
                     View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
             statusBarColor = Color.TRANSPARENT
+        }
+    }
+
+    private fun setupAlarmList() {
+        val adapter = AlarmAdapter(
+            onToggleAlarm = { alarm, isEnabled ->
+                viewModel.update(alarm.copy(isEnabled = isEnabled))
+            },
+            onDeleteAlarm = { alarm ->
+                viewModel.delete(alarm)
+            }
+        )
+
+        binding.rvAlarms.apply {
+            this.adapter = adapter
+            layoutManager = LinearLayoutManager(this@MainActivity)
+        }
+
+        viewModel.allAlarms.observe(this) { alarms ->
+            adapter.submitList(alarms)
+        }
+    }
+
+    private fun setupAddAlarmButton() {
+        binding.btnAddAlarm.setOnClickListener {
+            AlarmSettingFragment().show(supportFragmentManager, "alarm_setting")
         }
     }
 

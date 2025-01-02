@@ -10,9 +10,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.FragmentContainerView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
+import com.google.android.material.button.MaterialButton;
 import com.weather.app.R;
 import java.lang.NullPointerException;
 import java.lang.Override;
@@ -23,16 +25,31 @@ public final class ActivityMainBinding implements ViewBinding {
   private final ConstraintLayout rootView;
 
   @NonNull
+  public final MaterialButton btnAddAlarm;
+
+  @NonNull
+  public final CardView cardAlarm;
+
+  @NonNull
   public final CardView cardTime;
 
   @NonNull
   public final CardView cardWeather;
 
   @NonNull
+  public final FragmentContainerView container;
+
+  @NonNull
   public final ImageView ivWeatherIcon;
 
   @NonNull
+  public final RecyclerView rvAlarms;
+
+  @NonNull
   public final RecyclerView rvForecast;
+
+  @NonNull
+  public final TextView tvAlarmTitle;
 
   @NonNull
   public final TextView tvCurrentTime;
@@ -46,16 +63,23 @@ public final class ActivityMainBinding implements ViewBinding {
   @NonNull
   public final TextView tvWeatherDescription;
 
-  private ActivityMainBinding(@NonNull ConstraintLayout rootView, @NonNull CardView cardTime,
-      @NonNull CardView cardWeather, @NonNull ImageView ivWeatherIcon,
-      @NonNull RecyclerView rvForecast, @NonNull TextView tvCurrentTime,
-      @NonNull TextView tvLocation, @NonNull TextView tvTemperature,
-      @NonNull TextView tvWeatherDescription) {
+  private ActivityMainBinding(@NonNull ConstraintLayout rootView,
+      @NonNull MaterialButton btnAddAlarm, @NonNull CardView cardAlarm, @NonNull CardView cardTime,
+      @NonNull CardView cardWeather, @NonNull FragmentContainerView container,
+      @NonNull ImageView ivWeatherIcon, @NonNull RecyclerView rvAlarms,
+      @NonNull RecyclerView rvForecast, @NonNull TextView tvAlarmTitle,
+      @NonNull TextView tvCurrentTime, @NonNull TextView tvLocation,
+      @NonNull TextView tvTemperature, @NonNull TextView tvWeatherDescription) {
     this.rootView = rootView;
+    this.btnAddAlarm = btnAddAlarm;
+    this.cardAlarm = cardAlarm;
     this.cardTime = cardTime;
     this.cardWeather = cardWeather;
+    this.container = container;
     this.ivWeatherIcon = ivWeatherIcon;
+    this.rvAlarms = rvAlarms;
     this.rvForecast = rvForecast;
+    this.tvAlarmTitle = tvAlarmTitle;
     this.tvCurrentTime = tvCurrentTime;
     this.tvLocation = tvLocation;
     this.tvTemperature = tvTemperature;
@@ -89,6 +113,18 @@ public final class ActivityMainBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.btnAddAlarm;
+      MaterialButton btnAddAlarm = ViewBindings.findChildViewById(rootView, id);
+      if (btnAddAlarm == null) {
+        break missingId;
+      }
+
+      id = R.id.cardAlarm;
+      CardView cardAlarm = ViewBindings.findChildViewById(rootView, id);
+      if (cardAlarm == null) {
+        break missingId;
+      }
+
       id = R.id.cardTime;
       CardView cardTime = ViewBindings.findChildViewById(rootView, id);
       if (cardTime == null) {
@@ -101,15 +137,33 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.container;
+      FragmentContainerView container = ViewBindings.findChildViewById(rootView, id);
+      if (container == null) {
+        break missingId;
+      }
+
       id = R.id.ivWeatherIcon;
       ImageView ivWeatherIcon = ViewBindings.findChildViewById(rootView, id);
       if (ivWeatherIcon == null) {
         break missingId;
       }
 
+      id = R.id.rvAlarms;
+      RecyclerView rvAlarms = ViewBindings.findChildViewById(rootView, id);
+      if (rvAlarms == null) {
+        break missingId;
+      }
+
       id = R.id.rvForecast;
       RecyclerView rvForecast = ViewBindings.findChildViewById(rootView, id);
       if (rvForecast == null) {
+        break missingId;
+      }
+
+      id = R.id.tvAlarmTitle;
+      TextView tvAlarmTitle = ViewBindings.findChildViewById(rootView, id);
+      if (tvAlarmTitle == null) {
         break missingId;
       }
 
@@ -137,9 +191,9 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ActivityMainBinding((ConstraintLayout) rootView, cardTime, cardWeather,
-          ivWeatherIcon, rvForecast, tvCurrentTime, tvLocation, tvTemperature,
-          tvWeatherDescription);
+      return new ActivityMainBinding((ConstraintLayout) rootView, btnAddAlarm, cardAlarm, cardTime,
+          cardWeather, container, ivWeatherIcon, rvAlarms, rvForecast, tvAlarmTitle, tvCurrentTime,
+          tvLocation, tvTemperature, tvWeatherDescription);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));
