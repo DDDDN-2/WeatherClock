@@ -8,13 +8,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentContainerView;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.weather.app.R;
 import java.lang.NullPointerException;
 import java.lang.Override;
@@ -28,13 +28,13 @@ public final class ActivityMainBinding implements ViewBinding {
   public final MaterialButton btnAddAlarm;
 
   @NonNull
-  public final CardView cardAlarm;
+  public final MaterialCardView cardAlarm;
 
   @NonNull
-  public final CardView cardTime;
+  public final MaterialCardView cardTime;
 
   @NonNull
-  public final CardView cardWeather;
+  public final MaterialCardView cardWeather;
 
   @NonNull
   public final FragmentContainerView container;
@@ -64,11 +64,11 @@ public final class ActivityMainBinding implements ViewBinding {
   public final TextView tvWeatherDescription;
 
   private ActivityMainBinding(@NonNull ConstraintLayout rootView,
-      @NonNull MaterialButton btnAddAlarm, @NonNull CardView cardAlarm, @NonNull CardView cardTime,
-      @NonNull CardView cardWeather, @NonNull FragmentContainerView container,
-      @NonNull ImageView ivWeatherIcon, @NonNull RecyclerView rvAlarms,
-      @NonNull RecyclerView rvForecast, @NonNull TextView tvAlarmTitle,
-      @NonNull TextView tvCurrentTime, @NonNull TextView tvLocation,
+      @NonNull MaterialButton btnAddAlarm, @NonNull MaterialCardView cardAlarm,
+      @NonNull MaterialCardView cardTime, @NonNull MaterialCardView cardWeather,
+      @NonNull FragmentContainerView container, @NonNull ImageView ivWeatherIcon,
+      @NonNull RecyclerView rvAlarms, @NonNull RecyclerView rvForecast,
+      @NonNull TextView tvAlarmTitle, @NonNull TextView tvCurrentTime, @NonNull TextView tvLocation,
       @NonNull TextView tvTemperature, @NonNull TextView tvWeatherDescription) {
     this.rootView = rootView;
     this.btnAddAlarm = btnAddAlarm;
@@ -120,19 +120,19 @@ public final class ActivityMainBinding implements ViewBinding {
       }
 
       id = R.id.cardAlarm;
-      CardView cardAlarm = ViewBindings.findChildViewById(rootView, id);
+      MaterialCardView cardAlarm = ViewBindings.findChildViewById(rootView, id);
       if (cardAlarm == null) {
         break missingId;
       }
 
       id = R.id.cardTime;
-      CardView cardTime = ViewBindings.findChildViewById(rootView, id);
+      MaterialCardView cardTime = ViewBindings.findChildViewById(rootView, id);
       if (cardTime == null) {
         break missingId;
       }
 
       id = R.id.cardWeather;
-      CardView cardWeather = ViewBindings.findChildViewById(rootView, id);
+      MaterialCardView cardWeather = ViewBindings.findChildViewById(rootView, id);
       if (cardWeather == null) {
         break missingId;
       }
