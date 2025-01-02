@@ -22,6 +22,9 @@ import com.weather.app.api.WeatherApi
 import com.weather.app.data.WeatherResponse
 import android.util.Log
 import com.weather.app.utils.WeatherIconMapper
+import android.view.View
+import android.view.WindowManager
+import android.graphics.Color
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -37,6 +40,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
+        // 设置状态栏
+        setupStatusBar()
+        
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -159,6 +166,18 @@ class MainActivity : AppCompatActivity() {
         timeUpdateHandler?.removeCallbacksAndMessages(null)
         timeUpdateHandler = null
         super.onDestroy()
+    }
+
+    private fun setupStatusBar() {
+        // 设置状态栏为透明
+        window.apply {
+            clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+            addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+            decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                    View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            statusBarColor = Color.TRANSPARENT
+        }
     }
 
     companion object {
