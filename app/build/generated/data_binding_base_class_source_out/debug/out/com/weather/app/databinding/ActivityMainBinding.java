@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewbinding.ViewBinding;
@@ -20,6 +21,12 @@ import java.lang.String;
 public final class ActivityMainBinding implements ViewBinding {
   @NonNull
   private final ConstraintLayout rootView;
+
+  @NonNull
+  public final CardView cardTime;
+
+  @NonNull
+  public final CardView cardWeather;
 
   @NonNull
   public final ImageView ivWeatherIcon;
@@ -39,11 +46,14 @@ public final class ActivityMainBinding implements ViewBinding {
   @NonNull
   public final TextView tvWeatherDescription;
 
-  private ActivityMainBinding(@NonNull ConstraintLayout rootView, @NonNull ImageView ivWeatherIcon,
+  private ActivityMainBinding(@NonNull ConstraintLayout rootView, @NonNull CardView cardTime,
+      @NonNull CardView cardWeather, @NonNull ImageView ivWeatherIcon,
       @NonNull RecyclerView rvForecast, @NonNull TextView tvCurrentTime,
       @NonNull TextView tvLocation, @NonNull TextView tvTemperature,
       @NonNull TextView tvWeatherDescription) {
     this.rootView = rootView;
+    this.cardTime = cardTime;
+    this.cardWeather = cardWeather;
     this.ivWeatherIcon = ivWeatherIcon;
     this.rvForecast = rvForecast;
     this.tvCurrentTime = tvCurrentTime;
@@ -79,6 +89,18 @@ public final class ActivityMainBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.cardTime;
+      CardView cardTime = ViewBindings.findChildViewById(rootView, id);
+      if (cardTime == null) {
+        break missingId;
+      }
+
+      id = R.id.cardWeather;
+      CardView cardWeather = ViewBindings.findChildViewById(rootView, id);
+      if (cardWeather == null) {
+        break missingId;
+      }
+
       id = R.id.ivWeatherIcon;
       ImageView ivWeatherIcon = ViewBindings.findChildViewById(rootView, id);
       if (ivWeatherIcon == null) {
@@ -115,8 +137,9 @@ public final class ActivityMainBinding implements ViewBinding {
         break missingId;
       }
 
-      return new ActivityMainBinding((ConstraintLayout) rootView, ivWeatherIcon, rvForecast,
-          tvCurrentTime, tvLocation, tvTemperature, tvWeatherDescription);
+      return new ActivityMainBinding((ConstraintLayout) rootView, cardTime, cardWeather,
+          ivWeatherIcon, rvForecast, tvCurrentTime, tvLocation, tvTemperature,
+          tvWeatherDescription);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

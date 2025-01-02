@@ -1305,6 +1305,7 @@ int color accent_material_dark 0x7f050019
 int color accent_material_light 0x7f05001a
 int color androidx_core_ripple_material_light 0x7f05001b
 int color androidx_core_secondary_text_default_material_light 0x7f05001c
+int color background_color 0x7f05028f
 int color background_floating_material_dark 0x7f05001d
 int color background_floating_material_light 0x7f05001e
 int color background_material_dark 0x7f05001f
@@ -1318,6 +1319,7 @@ int color bright_foreground_material_dark 0x7f050026
 int color bright_foreground_material_light 0x7f050027
 int color button_material_dark 0x7f050028
 int color button_material_light 0x7f050029
+int color card_background 0x7f050290
 int color cardview_dark_background 0x7f05002a
 int color cardview_light_background 0x7f05002b
 int color cardview_shadow_end_color 0x7f05002c
@@ -1928,6 +1930,8 @@ int color switch_thumb_normal_material_dark 0x7f050288
 int color switch_thumb_normal_material_light 0x7f050289
 int color teal_200 0x7f05028a
 int color teal_700 0x7f05028b
+int color text_primary 0x7f050291
+int color text_secondary 0x7f050292
 int color tooltip_background_dark 0x7f05028c
 int color tooltip_background_light 0x7f05028d
 int color white 0x7f05028e
@@ -2762,6 +2766,7 @@ int drawable ic_fog 0x7f0700f6
 int drawable ic_keyboard_black_24dp 0x7f07009e
 int drawable ic_launcher_background 0x7f07009f
 int drawable ic_launcher_foreground 0x7f0700a0
+int drawable ic_location 0x7f0700fc
 int drawable ic_m3_chip_check 0x7f0700a1
 int drawable ic_m3_chip_checked_circle 0x7f0700a2
 int drawable ic_m3_chip_close 0x7f0700a3
@@ -2953,6 +2958,8 @@ int id buttonPanel 0x7f080064
 int id cache_measures 0x7f080065
 int id callMeasure 0x7f080066
 int id cancel_button 0x7f080067
+int id cardTime 0x7f0801f8
+int id cardWeather 0x7f0801f9
 int id carryVelocity 0x7f080068
 int id center 0x7f080069
 int id centerCrop 0x7f08006a
