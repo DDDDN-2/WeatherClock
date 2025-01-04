@@ -32,6 +32,8 @@ import android.view.WindowManager
 import android.graphics.Color
 import com.weather.app.utils.AlarmManagerHelper
 import com.weather.app.ui.dialog.AlarmRingingDialog
+import androidx.recyclerview.widget.ItemTouchHelper
+import com.weather.app.ui.helper.SwipeToDeleteCallback
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -217,6 +219,13 @@ class MainActivity : AppCompatActivity() {
         binding.rvAlarms.apply {
             this.adapter = adapter
             layoutManager = LinearLayoutManager(this@MainActivity)
+
+            // 添加滑动删除功能
+            val swipeHandler = SwipeToDeleteCallback { position ->
+                val alarm = adapter.currentList[position]
+                viewModel.delete(alarm)
+            }
+            ItemTouchHelper(swipeHandler).attachToRecyclerView(this)
         }
 
         viewModel.allAlarms.observe(this) { alarms ->
