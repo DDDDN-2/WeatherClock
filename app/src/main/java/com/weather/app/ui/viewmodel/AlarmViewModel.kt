@@ -26,6 +26,8 @@ class AlarmViewModel(
         repository.delete(alarm)
         alarmManagerHelper.cancelAlarm(alarm)
     }
+
+    fun getAlarmById(alarmId: Int): LiveData<AlarmEntity> = repository.getAlarmById(alarmId)
 }
 
 class AlarmViewModelFactory(

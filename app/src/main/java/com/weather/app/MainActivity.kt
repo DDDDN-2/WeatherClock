@@ -34,6 +34,8 @@ import com.weather.app.utils.AlarmManagerHelper
 import com.weather.app.ui.dialog.AlarmRingingDialog
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.weather.app.ui.helper.SwipeToDeleteCallback
+import com.weather.app.ui.dialog.AlarmDetailFragment
+import com.weather.app.db.AlarmEntity
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -220,11 +222,17 @@ class MainActivity : AppCompatActivity() {
             this.adapter = adapter
             layoutManager = LinearLayoutManager(this@MainActivity)
 
-            // 添加滑动删除功能
-            val swipeHandler = SwipeToDeleteCallback { position ->
-                val alarm = adapter.currentList[position]
-                viewModel.delete(alarm)
-            }
+            // 添加滑动操作
+            val swipeHandler = SwipeToDeleteCallback(
+                onDelete = { position ->
+                    val alarm = adapter.currentList[position]
+                    viewModel.delete(alarm)
+                },
+                onDetail = { position ->
+                    val alarm = adapter.currentList[position]
+                    showAlarmDetail(alarm)
+                }
+            )
             ItemTouchHelper(swipeHandler).attachToRecyclerView(this)
         }
 
@@ -242,6 +250,12 @@ class MainActivity : AppCompatActivity() {
     private fun showAlarmRingingDialog(alarmId: Int, label: String) {
         AlarmRingingDialog.newInstance(alarmId, label)
             .show(supportFragmentManager, "alarm_ringing")
+    }
+
+    private fun showAlarmDetail(alarm: AlarmEntity) {
+        // 显示闹钟详情对话框
+        AlarmDetailFragment.newInstance(alarm.id)
+            .show(supportFragmentManager, "alarm_detail")
     }
 
     companion object {

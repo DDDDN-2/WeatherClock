@@ -1,11 +1,13 @@
 package com.weather.app.db;
 
 import android.database.Cursor;
+import androidx.lifecycle.LiveData;
 import androidx.room.CoroutinesRoom;
 import androidx.room.EntityDeletionOrUpdateAdapter;
 import androidx.room.EntityInsertionAdapter;
 import androidx.room.RoomDatabase;
 import androidx.room.RoomSQLiteQuery;
+import androidx.room.util.CursorUtil;
 import androidx.room.util.DBUtil;
 import androidx.sqlite.db.SupportSQLiteStatement;
 import java.lang.Class;
@@ -186,6 +188,61 @@ public final class AlarmDao_Impl implements AlarmDao {
             }
             _item = new AlarmEntity(_tmpId,_tmpTimeInMillis,_tmpLabel,_tmpIsEnabled,_tmpRepeatDays);
             _result.add(_item);
+          }
+          return _result;
+        } finally {
+          _cursor.close();
+        }
+      }
+
+      @Override
+      protected void finalize() {
+        _statement.release();
+      }
+    });
+  }
+
+  @Override
+  public LiveData<AlarmEntity> getAlarmById(final int alarmId) {
+    final String _sql = "SELECT * FROM alarms WHERE id = ?";
+    final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 1);
+    int _argIndex = 1;
+    _statement.bindLong(_argIndex, alarmId);
+    return __db.getInvalidationTracker().createLiveData(new String[]{"alarms"}, false, new Callable<AlarmEntity>() {
+      @Override
+      public AlarmEntity call() throws Exception {
+        final Cursor _cursor = DBUtil.query(__db, _statement, false, null);
+        try {
+          final int _cursorIndexOfId = CursorUtil.getColumnIndexOrThrow(_cursor, "id");
+          final int _cursorIndexOfTimeInMillis = CursorUtil.getColumnIndexOrThrow(_cursor, "timeInMillis");
+          final int _cursorIndexOfLabel = CursorUtil.getColumnIndexOrThrow(_cursor, "label");
+          final int _cursorIndexOfIsEnabled = CursorUtil.getColumnIndexOrThrow(_cursor, "isEnabled");
+          final int _cursorIndexOfRepeatDays = CursorUtil.getColumnIndexOrThrow(_cursor, "repeatDays");
+          final AlarmEntity _result;
+          if(_cursor.moveToFirst()) {
+            final int _tmpId;
+            _tmpId = _cursor.getInt(_cursorIndexOfId);
+            final long _tmpTimeInMillis;
+            _tmpTimeInMillis = _cursor.getLong(_cursorIndexOfTimeInMillis);
+            final String _tmpLabel;
+            if (_cursor.isNull(_cursorIndexOfLabel)) {
+              _tmpLabel = null;
+            } else {
+              _tmpLabel = _cursor.getString(_cursorIndexOfLabel);
+            }
+            final boolean _tmpIsEnabled;
+            final int _tmp;
+            _tmp = _cursor.getInt(_cursorIndexOfIsEnabled);
+            _tmpIsEnabled = _tmp != 0;
+            final String _tmpRepeatDays;
+            if (_cursor.isNull(_cursorIndexOfRepeatDays)) {
+              _tmpRepeatDays = null;
+            } else {
+              _tmpRepeatDays = _cursor.getString(_cursorIndexOfRepeatDays);
+            }
+            _result = new AlarmEntity(_tmpId,_tmpTimeInMillis,_tmpLabel,_tmpIsEnabled,_tmpRepeatDays);
+          } else {
+            _result = null;
           }
           return _result;
         } finally {

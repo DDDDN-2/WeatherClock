@@ -3788,6 +3788,7 @@ layout design_text_input_end_icon
 layout design_text_input_start_icon
 layout dialog_alarm_ringing
 layout fragment_alarm
+layout fragment_alarm_detail
 layout fragment_alarm_setting
 layout item_alarm
 layout m3_alert_dialog

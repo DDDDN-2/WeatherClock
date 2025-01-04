@@ -39,18 +39,3 @@ data class AlarmEntity(
     val isEnabled: Boolean,
     val repeatDays: String // Comma-separated list of days
 )
-
-@Dao
-interface AlarmDao {
-    @Query("SELECT * FROM alarms ORDER BY timeInMillis ASC")
-    fun getAllAlarms(): Flow<List<AlarmEntity>>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(alarm: AlarmEntity)
-
-    @Update
-    suspend fun update(alarm: AlarmEntity)
-
-    @Delete
-    suspend fun delete(alarm: AlarmEntity)
-} 
