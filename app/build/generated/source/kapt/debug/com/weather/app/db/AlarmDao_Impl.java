@@ -39,7 +39,7 @@ public final class AlarmDao_Impl implements AlarmDao {
     this.__insertionAdapterOfAlarmEntity = new EntityInsertionAdapter<AlarmEntity>(__db) {
       @Override
       public String createQuery() {
-        return "INSERT OR REPLACE INTO `alarms` (`id`,`timeInMillis`,`label`,`isEnabled`,`repeatDays`) VALUES (nullif(?, 0),?,?,?,?)";
+        return "INSERT OR REPLACE INTO `alarms` (`id`,`timeInMillis`,`label`,`isEnabled`,`repeatDays`,`weatherAwareEnabled`,`weatherType`,`advanceMinutes`) VALUES (nullif(?, 0),?,?,?,?,?,?,?)";
       }
 
       @Override
@@ -58,6 +58,14 @@ public final class AlarmDao_Impl implements AlarmDao {
         } else {
           stmt.bindString(5, value.getRepeatDays());
         }
+        final int _tmp_1 = value.getWeatherAwareEnabled() ? 1 : 0;
+        stmt.bindLong(6, _tmp_1);
+        if (value.getWeatherType() == null) {
+          stmt.bindNull(7);
+        } else {
+          stmt.bindString(7, value.getWeatherType());
+        }
+        stmt.bindLong(8, value.getAdvanceMinutes());
       }
     };
     this.__deletionAdapterOfAlarmEntity = new EntityDeletionOrUpdateAdapter<AlarmEntity>(__db) {
@@ -74,7 +82,7 @@ public final class AlarmDao_Impl implements AlarmDao {
     this.__updateAdapterOfAlarmEntity = new EntityDeletionOrUpdateAdapter<AlarmEntity>(__db) {
       @Override
       public String createQuery() {
-        return "UPDATE OR ABORT `alarms` SET `id` = ?,`timeInMillis` = ?,`label` = ?,`isEnabled` = ?,`repeatDays` = ? WHERE `id` = ?";
+        return "UPDATE OR ABORT `alarms` SET `id` = ?,`timeInMillis` = ?,`label` = ?,`isEnabled` = ?,`repeatDays` = ?,`weatherAwareEnabled` = ?,`weatherType` = ?,`advanceMinutes` = ? WHERE `id` = ?";
       }
 
       @Override
@@ -93,7 +101,15 @@ public final class AlarmDao_Impl implements AlarmDao {
         } else {
           stmt.bindString(5, value.getRepeatDays());
         }
-        stmt.bindLong(6, value.getId());
+        final int _tmp_1 = value.getWeatherAwareEnabled() ? 1 : 0;
+        stmt.bindLong(6, _tmp_1);
+        if (value.getWeatherType() == null) {
+          stmt.bindNull(7);
+        } else {
+          stmt.bindString(7, value.getWeatherType());
+        }
+        stmt.bindLong(8, value.getAdvanceMinutes());
+        stmt.bindLong(9, value.getId());
       }
     };
   }
@@ -151,7 +167,7 @@ public final class AlarmDao_Impl implements AlarmDao {
 
   @Override
   public Flow<List<AlarmEntity>> getAllAlarms() {
-    final String _sql = "SELECT `alarms`.`id` AS `id`, `alarms`.`timeInMillis` AS `timeInMillis`, `alarms`.`label` AS `label`, `alarms`.`isEnabled` AS `isEnabled`, `alarms`.`repeatDays` AS `repeatDays` FROM alarms ORDER BY timeInMillis ASC";
+    final String _sql = "SELECT `alarms`.`id` AS `id`, `alarms`.`timeInMillis` AS `timeInMillis`, `alarms`.`label` AS `label`, `alarms`.`isEnabled` AS `isEnabled`, `alarms`.`repeatDays` AS `repeatDays`, `alarms`.`weatherAwareEnabled` AS `weatherAwareEnabled`, `alarms`.`weatherType` AS `weatherType`, `alarms`.`advanceMinutes` AS `advanceMinutes` FROM alarms ORDER BY timeInMillis ASC";
     final RoomSQLiteQuery _statement = RoomSQLiteQuery.acquire(_sql, 0);
     return CoroutinesRoom.createFlow(__db, false, new String[]{"alarms"}, new Callable<List<AlarmEntity>>() {
       @Override
@@ -163,6 +179,9 @@ public final class AlarmDao_Impl implements AlarmDao {
           final int _cursorIndexOfLabel = 2;
           final int _cursorIndexOfIsEnabled = 3;
           final int _cursorIndexOfRepeatDays = 4;
+          final int _cursorIndexOfWeatherAwareEnabled = 5;
+          final int _cursorIndexOfWeatherType = 6;
+          final int _cursorIndexOfAdvanceMinutes = 7;
           final List<AlarmEntity> _result = new ArrayList<AlarmEntity>(_cursor.getCount());
           while(_cursor.moveToNext()) {
             final AlarmEntity _item;
@@ -186,7 +205,19 @@ public final class AlarmDao_Impl implements AlarmDao {
             } else {
               _tmpRepeatDays = _cursor.getString(_cursorIndexOfRepeatDays);
             }
-            _item = new AlarmEntity(_tmpId,_tmpTimeInMillis,_tmpLabel,_tmpIsEnabled,_tmpRepeatDays);
+            final boolean _tmpWeatherAwareEnabled;
+            final int _tmp_1;
+            _tmp_1 = _cursor.getInt(_cursorIndexOfWeatherAwareEnabled);
+            _tmpWeatherAwareEnabled = _tmp_1 != 0;
+            final String _tmpWeatherType;
+            if (_cursor.isNull(_cursorIndexOfWeatherType)) {
+              _tmpWeatherType = null;
+            } else {
+              _tmpWeatherType = _cursor.getString(_cursorIndexOfWeatherType);
+            }
+            final int _tmpAdvanceMinutes;
+            _tmpAdvanceMinutes = _cursor.getInt(_cursorIndexOfAdvanceMinutes);
+            _item = new AlarmEntity(_tmpId,_tmpTimeInMillis,_tmpLabel,_tmpIsEnabled,_tmpRepeatDays,_tmpWeatherAwareEnabled,_tmpWeatherType,_tmpAdvanceMinutes);
             _result.add(_item);
           }
           return _result;
@@ -218,6 +249,9 @@ public final class AlarmDao_Impl implements AlarmDao {
           final int _cursorIndexOfLabel = CursorUtil.getColumnIndexOrThrow(_cursor, "label");
           final int _cursorIndexOfIsEnabled = CursorUtil.getColumnIndexOrThrow(_cursor, "isEnabled");
           final int _cursorIndexOfRepeatDays = CursorUtil.getColumnIndexOrThrow(_cursor, "repeatDays");
+          final int _cursorIndexOfWeatherAwareEnabled = CursorUtil.getColumnIndexOrThrow(_cursor, "weatherAwareEnabled");
+          final int _cursorIndexOfWeatherType = CursorUtil.getColumnIndexOrThrow(_cursor, "weatherType");
+          final int _cursorIndexOfAdvanceMinutes = CursorUtil.getColumnIndexOrThrow(_cursor, "advanceMinutes");
           final AlarmEntity _result;
           if(_cursor.moveToFirst()) {
             final int _tmpId;
@@ -240,7 +274,19 @@ public final class AlarmDao_Impl implements AlarmDao {
             } else {
               _tmpRepeatDays = _cursor.getString(_cursorIndexOfRepeatDays);
             }
-            _result = new AlarmEntity(_tmpId,_tmpTimeInMillis,_tmpLabel,_tmpIsEnabled,_tmpRepeatDays);
+            final boolean _tmpWeatherAwareEnabled;
+            final int _tmp_1;
+            _tmp_1 = _cursor.getInt(_cursorIndexOfWeatherAwareEnabled);
+            _tmpWeatherAwareEnabled = _tmp_1 != 0;
+            final String _tmpWeatherType;
+            if (_cursor.isNull(_cursorIndexOfWeatherType)) {
+              _tmpWeatherType = null;
+            } else {
+              _tmpWeatherType = _cursor.getString(_cursorIndexOfWeatherType);
+            }
+            final int _tmpAdvanceMinutes;
+            _tmpAdvanceMinutes = _cursor.getInt(_cursorIndexOfAdvanceMinutes);
+            _result = new AlarmEntity(_tmpId,_tmpTimeInMillis,_tmpLabel,_tmpIsEnabled,_tmpRepeatDays,_tmpWeatherAwareEnabled,_tmpWeatherType,_tmpAdvanceMinutes);
           } else {
             _result = null;
           }

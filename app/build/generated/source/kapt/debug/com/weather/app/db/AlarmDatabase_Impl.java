@@ -34,12 +34,12 @@ public final class AlarmDatabase_Impl extends AlarmDatabase {
 
   @Override
   protected SupportSQLiteOpenHelper createOpenHelper(DatabaseConfiguration configuration) {
-    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(configuration, new RoomOpenHelper.Delegate(1) {
+    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(configuration, new RoomOpenHelper.Delegate(2) {
       @Override
       public void createAllTables(SupportSQLiteDatabase _db) {
-        _db.execSQL("CREATE TABLE IF NOT EXISTS `alarms` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `timeInMillis` INTEGER NOT NULL, `label` TEXT NOT NULL, `isEnabled` INTEGER NOT NULL, `repeatDays` TEXT NOT NULL)");
+        _db.execSQL("CREATE TABLE IF NOT EXISTS `alarms` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `timeInMillis` INTEGER NOT NULL, `label` TEXT NOT NULL, `isEnabled` INTEGER NOT NULL, `repeatDays` TEXT NOT NULL, `weatherAwareEnabled` INTEGER NOT NULL DEFAULT 0, `weatherType` TEXT NOT NULL DEFAULT '', `advanceMinutes` INTEGER NOT NULL DEFAULT 0)");
         _db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        _db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '54af17836cf9af4a366526ebb98f3203')");
+        _db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3b7d65181b9d2055f62857d89d931ca5')");
       }
 
       @Override
@@ -83,12 +83,15 @@ public final class AlarmDatabase_Impl extends AlarmDatabase {
 
       @Override
       public RoomOpenHelper.ValidationResult onValidateSchema(SupportSQLiteDatabase _db) {
-        final HashMap<String, TableInfo.Column> _columnsAlarms = new HashMap<String, TableInfo.Column>(5);
+        final HashMap<String, TableInfo.Column> _columnsAlarms = new HashMap<String, TableInfo.Column>(8);
         _columnsAlarms.put("id", new TableInfo.Column("id", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsAlarms.put("timeInMillis", new TableInfo.Column("timeInMillis", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsAlarms.put("label", new TableInfo.Column("label", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsAlarms.put("isEnabled", new TableInfo.Column("isEnabled", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsAlarms.put("repeatDays", new TableInfo.Column("repeatDays", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsAlarms.put("weatherAwareEnabled", new TableInfo.Column("weatherAwareEnabled", "INTEGER", true, 0, "0", TableInfo.CREATED_FROM_ENTITY));
+        _columnsAlarms.put("weatherType", new TableInfo.Column("weatherType", "TEXT", true, 0, "''", TableInfo.CREATED_FROM_ENTITY));
+        _columnsAlarms.put("advanceMinutes", new TableInfo.Column("advanceMinutes", "INTEGER", true, 0, "0", TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysAlarms = new HashSet<TableInfo.ForeignKey>(0);
         final HashSet<TableInfo.Index> _indicesAlarms = new HashSet<TableInfo.Index>(0);
         final TableInfo _infoAlarms = new TableInfo("alarms", _columnsAlarms, _foreignKeysAlarms, _indicesAlarms);
@@ -100,7 +103,7 @@ public final class AlarmDatabase_Impl extends AlarmDatabase {
         }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "54af17836cf9af4a366526ebb98f3203", "88db52ed64b8d06dd10ed0e27c40f718");
+    }, "3b7d65181b9d2055f62857d89d931ca5", "f1909c5da9f9fefce1d2fb71728c6967");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(configuration.context)
         .name(configuration.name)
         .callback(_openCallback)

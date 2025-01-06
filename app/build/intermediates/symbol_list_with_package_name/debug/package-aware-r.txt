@@ -3311,6 +3311,7 @@ id end
 id endToStart
 id enterAlways
 id enterAlwaysCollapsed
+id etAdvanceMinutes
 id etLabel
 id exitUntilCollapsed
 id expand_activities_button
@@ -3368,6 +3369,7 @@ id jumpToStart
 id labelInputLayout
 id labeled
 id layout
+id layoutWeatherSettings
 id left
 id leftToRight
 id legacy
@@ -3553,6 +3555,7 @@ id snapMargins
 id south
 id spacer
 id special_effects_controller_view_tag
+id spinnerWeatherType
 id spline
 id split_action_bar
 id spread
@@ -3575,6 +3578,7 @@ id submenuarrow
 id submit_area
 id supportScrollUp
 id switchAlarm
+id switchWeatherAware
 id tabMode
 id tag_accessibility_actions
 id tag_accessibility_clickable_spans

@@ -28,4 +28,57 @@
         android:layout_marginTop="16dp"
         android:text="启用闹钟"/>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="#DDDDDD"/>
+
+    <Switch
+        android:id="@+id/switchWeatherAware"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="天气感知"/>
+
+    <LinearLayout
+        android:id="@+id/layoutWeatherSettings"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="8dp"
+        android:visibility="gone">
+
+        <Spinner
+            android:id="@+id/spinnerWeatherType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="提前"/>
+
+            <EditText
+                android:id="@+id/etAdvanceMinutes"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:inputType="number"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="分钟响铃"/>
+        </LinearLayout>
+    </LinearLayout>
+
 </LinearLayout> 

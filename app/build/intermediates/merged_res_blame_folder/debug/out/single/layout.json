@@ -1,26 +1,30 @@
 [
     {
-        "merged": "com.weather.app-mergeDebugResources-54:/layout/fragment_alarm.xml",
-        "source": "com.weather.app-main-57:/layout/fragment_alarm.xml"
+        "merged": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-mergeDebugResources-54:\\layout\\fragment_alarm_detail.xml",
+        "source": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-main-57:\\layout\\fragment_alarm_detail.xml"
+    },
+    {
+        "merged": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-mergeDebugResources-54:\\layout\\dialog_alarm_ringing.xml",
+        "source": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-main-57:\\layout\\dialog_alarm_ringing.xml"
+    },
+    {
+        "merged": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-mergeDebugResources-54:\\layout\\activity_main.xml",
+        "source": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-main-57:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-mergeDebugResources-54:\\layout\\fragment_alarm_setting.xml",
+        "source": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-main-57:\\layout\\fragment_alarm_setting.xml"
     },
     {
         "merged": "com.weather.app-mergeDebugResources-54:/layout/fragment_alarm_detail.xml",
         "source": "com.weather.app-main-57:/layout/fragment_alarm_detail.xml"
     },
     {
-        "merged": "com.weather.app-mergeDebugResources-54:/layout/item_alarm.xml",
-        "source": "com.weather.app-main-57:/layout/item_alarm.xml"
+        "merged": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-mergeDebugResources-54:\\layout\\fragment_alarm.xml",
+        "source": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-main-57:\\layout\\fragment_alarm.xml"
     },
     {
-        "merged": "com.weather.app-mergeDebugResources-54:/layout/activity_main.xml",
-        "source": "com.weather.app-main-57:/layout/activity_main.xml"
-    },
-    {
-        "merged": "com.weather.app-mergeDebugResources-54:/layout/dialog_alarm_ringing.xml",
-        "source": "com.weather.app-main-57:/layout/dialog_alarm_ringing.xml"
-    },
-    {
-        "merged": "com.weather.app-mergeDebugResources-54:/layout/fragment_alarm_setting.xml",
-        "source": "com.weather.app-main-57:/layout/fragment_alarm_setting.xml"
+        "merged": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-mergeDebugResources-54:\\layout\\item_alarm.xml",
+        "source": "C:\\Users\\7\\.gradle\\daemon\\7.5\\com.weather.app-main-57:\\layout\\item_alarm.xml"
     }
 ]

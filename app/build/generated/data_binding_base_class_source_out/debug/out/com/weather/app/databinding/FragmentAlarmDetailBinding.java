@@ -4,7 +4,9 @@ package com.weather.app.databinding;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -21,7 +23,19 @@ public final class FragmentAlarmDetailBinding implements ViewBinding {
   private final LinearLayout rootView;
 
   @NonNull
+  public final EditText etAdvanceMinutes;
+
+  @NonNull
+  public final LinearLayout layoutWeatherSettings;
+
+  @NonNull
+  public final Spinner spinnerWeatherType;
+
+  @NonNull
   public final Switch switchAlarm;
+
+  @NonNull
+  public final Switch switchWeatherAware;
 
   @NonNull
   public final TextView tvLabel;
@@ -29,10 +43,16 @@ public final class FragmentAlarmDetailBinding implements ViewBinding {
   @NonNull
   public final TextView tvTime;
 
-  private FragmentAlarmDetailBinding(@NonNull LinearLayout rootView, @NonNull Switch switchAlarm,
-      @NonNull TextView tvLabel, @NonNull TextView tvTime) {
+  private FragmentAlarmDetailBinding(@NonNull LinearLayout rootView,
+      @NonNull EditText etAdvanceMinutes, @NonNull LinearLayout layoutWeatherSettings,
+      @NonNull Spinner spinnerWeatherType, @NonNull Switch switchAlarm,
+      @NonNull Switch switchWeatherAware, @NonNull TextView tvLabel, @NonNull TextView tvTime) {
     this.rootView = rootView;
+    this.etAdvanceMinutes = etAdvanceMinutes;
+    this.layoutWeatherSettings = layoutWeatherSettings;
+    this.spinnerWeatherType = spinnerWeatherType;
     this.switchAlarm = switchAlarm;
+    this.switchWeatherAware = switchWeatherAware;
     this.tvLabel = tvLabel;
     this.tvTime = tvTime;
   }
@@ -64,9 +84,33 @@ public final class FragmentAlarmDetailBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
+      id = R.id.etAdvanceMinutes;
+      EditText etAdvanceMinutes = ViewBindings.findChildViewById(rootView, id);
+      if (etAdvanceMinutes == null) {
+        break missingId;
+      }
+
+      id = R.id.layoutWeatherSettings;
+      LinearLayout layoutWeatherSettings = ViewBindings.findChildViewById(rootView, id);
+      if (layoutWeatherSettings == null) {
+        break missingId;
+      }
+
+      id = R.id.spinnerWeatherType;
+      Spinner spinnerWeatherType = ViewBindings.findChildViewById(rootView, id);
+      if (spinnerWeatherType == null) {
+        break missingId;
+      }
+
       id = R.id.switchAlarm;
       Switch switchAlarm = ViewBindings.findChildViewById(rootView, id);
       if (switchAlarm == null) {
+        break missingId;
+      }
+
+      id = R.id.switchWeatherAware;
+      Switch switchWeatherAware = ViewBindings.findChildViewById(rootView, id);
+      if (switchWeatherAware == null) {
         break missingId;
       }
 
@@ -82,7 +126,9 @@ public final class FragmentAlarmDetailBinding implements ViewBinding {
         break missingId;
       }
 
-      return new FragmentAlarmDetailBinding((LinearLayout) rootView, switchAlarm, tvLabel, tvTime);
+      return new FragmentAlarmDetailBinding((LinearLayout) rootView, etAdvanceMinutes,
+          layoutWeatherSettings, spinnerWeatherType, switchAlarm, switchWeatherAware, tvLabel,
+          tvTime);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

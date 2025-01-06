@@ -2,11 +2,10 @@ package com.weather.app.db
 
 import android.content.Context
 import androidx.room.*
-import kotlinx.coroutines.flow.Flow
 
 @Database(
     entities = [AlarmEntity::class], 
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class AlarmDatabase : RoomDatabase() {
@@ -22,20 +21,12 @@ abstract class AlarmDatabase : RoomDatabase() {
                     context.applicationContext,
                     AlarmDatabase::class.java,
                     "alarm_database"
-                ).build()
+                )
+                .fallbackToDestructiveMigration()
+                .build()
                 INSTANCE = instance
                 instance
             }
         }
     }
 }
-
-@Entity(tableName = "alarms")
-data class AlarmEntity(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    val timeInMillis: Long,
-    val label: String,
-    val isEnabled: Boolean,
-    val repeatDays: String // Comma-separated list of days
-)

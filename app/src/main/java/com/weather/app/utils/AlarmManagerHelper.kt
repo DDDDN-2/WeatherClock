@@ -18,6 +18,15 @@ class AlarmManagerHelper(private val context: Context) {
         val currentTimeMillis = System.currentTimeMillis()
         
         var targetTimeMillis = alarm.timeInMillis
+        
+        // 如果启用了天气感知，检查天气并调整时间
+        if (alarm.weatherAwareEnabled) {
+            // TODO: 检查天气预报，如果符合条件，提前响铃
+            // 这里需要调用天气API获取预报信息
+            // 如果天气符合条件，调整时间：
+            // targetTimeMillis -= (alarm.advanceMinutes * 60 * 1000)
+        }
+        
         if (targetTimeMillis < currentTimeMillis) {
             targetTimeMillis += 24 * 60 * 60 * 1000
         }

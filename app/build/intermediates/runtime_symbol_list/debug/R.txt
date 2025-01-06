@@ -3310,6 +3310,7 @@ int id end 0x7f0800c1
 int id endToStart 0x7f0800c2
 int id enterAlways 0x7f0800c3
 int id enterAlwaysCollapsed 0x7f0800c4
+int id etAdvanceMinutes 0x7f08021c
 int id etLabel 0x7f0800c5
 int id exitUntilCollapsed 0x7f0800c6
 int id expand_activities_button 0x7f0800c7
@@ -3367,6 +3368,7 @@ int id jumpToStart 0x7f0800fa
 int id labelInputLayout 0x7f0800fb
 int id labeled 0x7f0800fc
 int id layout 0x7f0800fd
+int id layoutWeatherSettings 0x7f08021d
 int id left 0x7f0800fe
 int id leftToRight 0x7f0800ff
 int id legacy 0x7f080100
@@ -3552,6 +3554,7 @@ int id snapMargins 0x7f0801b3
 int id south 0x7f0801b4
 int id spacer 0x7f0801b5
 int id special_effects_controller_view_tag 0x7f0801b6
+int id spinnerWeatherType 0x7f08021e
 int id spline 0x7f0801b7
 int id split_action_bar 0x7f0801b8
 int id spread 0x7f0801b9
@@ -3574,6 +3577,7 @@ int id submenuarrow 0x7f0801c9
 int id submit_area 0x7f0801ca
 int id supportScrollUp 0x7f0801cb
 int id switchAlarm 0x7f0801cc
+int id switchWeatherAware 0x7f08021f
 int id tabMode 0x7f0801cd
 int id tag_accessibility_actions 0x7f0801ce
 int id tag_accessibility_clickable_spans 0x7f0801cf
