@@ -36,24 +36,24 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import com.weather.app.ui.helper.SwipeToDeleteCallback
 import com.weather.app.ui.dialog.AlarmDetailFragment
 import com.weather.app.db.AlarmEntity
+import com.weather.app.api.WeatherService
+import com.weather.app.utils.WeatherUiHelper
+import com.weather.app.data.CaiyunResponse
+import kotlin.Result
+import com.weather.app.utils.LocationHelper
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var timeUpdateHandler: Handler? = null
-    private val weatherApi: WeatherApi by lazy {
-        Retrofit.Builder()
-            .baseUrl("https://api.openweathermap.org/data/2.5/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(WeatherApi::class.java)
-    }
+    private val weatherService = WeatherService()
     private val viewModel: AlarmViewModel by viewModels {
         AlarmViewModelFactory(
             repository = (application as WeatherApp).repository,
             alarmManagerHelper = AlarmManagerHelper(this)
         )
     }
+    private lateinit var locationHelper: LocationHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,6 +89,8 @@ class MainActivity : AppCompatActivity() {
                 intent.getStringExtra("ALARM_LABEL") ?: "闹钟"
             )
         }
+
+        locationHelper = LocationHelper(this)
     }
 
     private fun updateCurrentTime() {
@@ -138,38 +140,42 @@ class MainActivity : AppCompatActivity() {
     private fun fetchWeatherData(lat: Double, lon: Double) {
         Log.d("WeatherApp", "开始获取天气数据: lat=$lat, lon=$lon")
         
+        // 获取地点名称
+        val locationName = locationHelper.getLocationName(lat, lon)
+        
         lifecycleScope.launch {
             try {
-                Log.d("WeatherApp", "正在调用天气API...")
-                val response = weatherApi.getCurrentWeather(
-                    lat = lat,
-                    lon = lon,
-                    apiKey = "7b2397a91df632710a076feb9283d4fc"
-                )
-                
-                Log.d("WeatherApp", "API响应成功: $response")
-                Log.d("WeatherApp", "城市: ${response.name}")
-                Log.d("WeatherApp", "温度: ${response.main.temp}°C")
-                Log.d("WeatherApp", "天气描述: ${response.weather.firstOrNull()?.description}")
-                
-                binding.apply {
-                    tvLocation.text = response.name
-                    tvTemperature.text = "${response.main.temp.roundToInt()}°C"
-                    tvWeatherDescription.text = response.weather.firstOrNull()?.description
-                        ?.capitalize(Locale.getDefault())
+                val result: Result<CaiyunResponse> = weatherService.getWeather(lat, lon)
+                result.onSuccess { response: CaiyunResponse ->
+                    Log.d("WeatherApp", "API响应成功: $response")
                     
-                    // 设置天气图标
-                    response.weather.firstOrNull()?.icon?.let { iconCode ->
-                        ivWeatherIcon.setImageResource(WeatherIconMapper.getWeatherIconResource(iconCode))
-                    }
+                    // 使用WeatherUiHelper更新UI
+                    WeatherUiHelper.updateWeatherUi(
+                        temperature = response.result.realtime.temperature,
+                        skycon = response.result.realtime.skycon,
+                        locationName = locationName,
+                        tvLocation = binding.tvLocation,
+                        tvTemperature = binding.tvTemperature,
+                        tvWeatherDesc = binding.tvWeatherDescription,
+                        ivWeatherIcon = binding.ivWeatherIcon
+                    )
+                    
+                    Log.d("WeatherApp", "UI更新完成")
+                }.onFailure { e: Throwable ->
+                    Log.e("WeatherApp", "获取天气数据失败", e)
+                    Toast.makeText(
+                        this@MainActivity,
+                        "获取天气失败: ${e.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
-                
-                Log.d("WeatherApp", "UI更新完成")
             } catch (e: Exception) {
                 Log.e("WeatherApp", "获取天气数据失败", e)
-                Log.e("WeatherApp", "错误详情: ${e.message}")
-                e.printStackTrace()
-                Toast.makeText(this@MainActivity, "Error: ${e.message}", Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this@MainActivity,
+                    "Error: ${e.message}",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
     }

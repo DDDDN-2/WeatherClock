@@ -1,0 +1,30 @@
+{
+  "status": "ok", // 返回状态
+  "api_version": "v2.6", // API 版本
+  "api_status": "alpha", // API 状态
+  "lang": "zh_CN", // 语言
+  "unit": "metric", // 单位
+  "tzshift": 28800, // 时区偏移
+  "timezone": "Asia/Shanghai", // 时区
+  "server_time": 1640758065, // 服务器时间
+  "location": [39.976, 116.3176], // 地理位置
+  "result": {
+    "alert": {
+      // 预警信息
+    },
+    "realtime": {
+      // 实时天气数据
+    },
+    "minutely": {
+      // 分钟级降水数据
+    },
+    "hourly": {
+      // 小时级降水数据
+    },
+    "daily": {
+      // 天级降水数据
+    },
+    "primary": 0, // 主要数据
+    "forecast_keypoint": "未来两小时不会下雨，放心出门吧" // 天气预报关键点
+  }
+}
