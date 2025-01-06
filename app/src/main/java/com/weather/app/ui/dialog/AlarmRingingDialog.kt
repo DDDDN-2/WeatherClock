@@ -6,10 +6,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.weather.app.R
 import com.weather.app.databinding.DialogAlarmRingingBinding
 import com.weather.app.service.AlarmService
+import com.weather.app.db.AlarmEntity
+import com.weather.app.utils.AlarmManagerHelper
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -51,9 +54,24 @@ class AlarmRingingDialog : DialogFragment() {
 
         // 稍后提醒（5分钟后）
         binding.btnSnooze.setOnClickListener {
-            // TODO: 实现稍后提醒功能
+            val snoozeTimeMillis = System.currentTimeMillis() + 5 * 60 * 1000 // 5分钟后
+            val alarmEntity = AlarmEntity(
+                id = alarmId,
+                timeInMillis = snoozeTimeMillis,
+                label = "$label (稍后提醒)",
+                isEnabled = true,
+                repeatDays = ""
+            )
+            
+            // 使用 AlarmManagerHelper 设置新的闹钟
+            val alarmManagerHelper = AlarmManagerHelper(requireContext())
+            alarmManagerHelper.scheduleAlarm(alarmEntity)
+            
             stopAlarmService()
             dismiss()
+            
+            // 显示提示
+            Toast.makeText(context, "将在5分钟后再次提醒", Toast.LENGTH_SHORT).show()
         }
     }
 
