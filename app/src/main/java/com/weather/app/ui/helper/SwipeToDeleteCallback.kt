@@ -3,30 +3,35 @@ package com.weather.app.ui.helper
 import android.graphics.*
 import android.graphics.drawable.ColorDrawable
 import android.view.MotionEvent
+import android.view.View
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 
 class SwipeToDeleteCallback(
     private val onDelete: (Int) -> Unit,
-    private val onDetail: (Int) -> Unit  // 添加查看详情的回调
-) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {  // 支持左右滑动
+    private val onDetail: (Int) -> Unit
+) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
 
     private val deleteButtonWidth = 280f
-    private val detailButtonWidth = 280f  // 详情按钮宽度
+    private val detailButtonWidth = 280f
     private var currentlyShownItem: Int = -1
+    private var recyclerView: RecyclerView? = null
+    private var isActionButtonClicked = false
 
     override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, 
         target: RecyclerView.ViewHolder) = false
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         currentlyShownItem = viewHolder.adapterPosition
+        isActionButtonClicked = false
         setupTouchListener(viewHolder.itemView.parent as RecyclerView, direction)
     }
 
     private fun setupTouchListener(recyclerView: RecyclerView, direction: Int) {
-        recyclerView.setOnTouchListener { _, event ->
+        this.recyclerView = recyclerView
+        val touchListener = View.OnTouchListener { view, event ->
             if (event.action == MotionEvent.ACTION_UP && currentlyShownItem != -1) {
-                val viewHolder = recyclerView.findViewHolderForAdapterPosition(currentlyShownItem)
+                val viewHolder = (view as RecyclerView).findViewHolderForAdapterPosition(currentlyShownItem)
                 if (viewHolder != null) {
                     val itemView = viewHolder.itemView
                     when (direction) {
@@ -37,10 +42,10 @@ class SwipeToDeleteCallback(
                                 event.y >= itemView.top &&
                                 event.y <= itemView.bottom
                             ) {
+                                isActionButtonClicked = true
                                 onDelete(currentlyShownItem)
-                                currentlyShownItem = -1
-                                recyclerView.setOnTouchListener(null)
-                                return@setOnTouchListener true
+                                resetState()
+                                return@OnTouchListener true
                             }
                         }
                         ItemTouchHelper.RIGHT -> {
@@ -50,21 +55,30 @@ class SwipeToDeleteCallback(
                                 event.y >= itemView.top &&
                                 event.y <= itemView.bottom
                             ) {
+                                isActionButtonClicked = true
                                 onDetail(currentlyShownItem)
-                                currentlyShownItem = -1
-                                recyclerView.setOnTouchListener(null)
-                                return@setOnTouchListener true
+                                // 不要在这里调用 resetState()
+                                return@OnTouchListener true
                             }
                         }
                     }
                 }
-                // 点击其他区域，恢复item
-                recyclerView.adapter?.notifyItemChanged(currentlyShownItem)
-                currentlyShownItem = -1
-                recyclerView.setOnTouchListener(null)
+                // 只有在没有点击操作按钮时才重置状态
+                if (!isActionButtonClicked) {
+                    (view as RecyclerView).adapter?.notifyItemChanged(currentlyShownItem)
+                    resetState()
+                }
             }
             false
         }
+        recyclerView.setOnTouchListener(touchListener)
+    }
+
+    private fun resetState() {
+        currentlyShownItem = -1
+        isActionButtonClicked = false
+        recyclerView?.setOnTouchListener(null)
+        recyclerView = null
     }
 
     override fun onChildDraw(
@@ -142,9 +156,9 @@ class SwipeToDeleteCallback(
 
     override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
         super.clearView(recyclerView, viewHolder)
-        if (viewHolder.adapterPosition == currentlyShownItem) {
-            recyclerView.setOnTouchListener(null)
-            currentlyShownItem = -1
+        // 只有在没有点击操作按钮时才重置状态
+        if (viewHolder.adapterPosition == currentlyShownItem && !isActionButtonClicked) {
+            resetState()
         }
     }
-} 
+}
